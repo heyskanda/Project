@@ -1,10 +1,15 @@
 import React from 'react'
-import Sidebar from '../components/Sidebar'
+import { Navbar } from '../components/user-components/Navbar'
+import Sidebar from '../components/user-components/Sidebar'
 
 export default function Insights() {
   return (
     <div>
-        <Sidebar />
+      <Sidebar />
+      <Navbar />
+      <div>
+        
+      </div>
     </div>
   )
 }

@@ -1,19 +1,29 @@
-import React from 'react'
 import Link from 'next/link'
 import { Sidebardata } from './recycle/Sidebardata'
 import { IoMdLogOut } from 'react-icons/io'
-import { Navbar } from './Navbar'
 import { useRouter } from 'next/router'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { useAuth } from '../../context/TraderxContext'
 
 const Sidebar = () => {
+
+  const { logout } = useAuth()
   const router = useRouter()
 
+  const handleLogout = () => {
+    try{
+      logout()
+    } catch(err) {
+      return toast.error('Failed to logout')
+    }
+  }
   return (
     <>
-      <aside className="font-poppins radial ml-[-100%] fixed z-10 top-0 pb-3 w-full flex flex-col justify-between h-screen border-r border-slate-900 bg-night md:w-4/12 lg:ml-0 lg:w-[15%] xl:w-[15%] 2xl:w-[13%]">
+      <aside className="font-poppins radial ml-[-100%] fixed z-10 top-0 pb-3 w-full flex flex-col justify-between h-screen border-r border-slate-900 bg-night md:w-4/12 lg:ml-0 lg:w-[13%] ">
         <div>
           <div className="-mx-6 px-10 py-4 ">
-            <a href="#" className=''>
+            <a href="" className=''>
             <svg width="50" height="50" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M265.472 290.74L174.635 158.612C165.826 145.767 158.119 135.674 151.512 128.333C144.906 120.626 136.281 113.836 125.638 107.964C114.994 102.091 101.965 98.7881 86.5498 98.0541V87.0435H152.614C168.762 87.0435 182.342 92.3653 193.353 103.009C204.363 113.285 216.475 128.15 229.688 147.602L298.504 249.45L386.589 378.825C397.967 395.708 410.078 409.838 422.924 421.216C436.137 432.226 450.634 438.282 466.416 439.383V450.394H408.61C392.829 450.394 378.882 444.889 366.77 433.878C354.658 422.5 342.914 407.819 331.536 389.835L265.472 290.74Z" fill="#AED6FF" fillOpacity="0.4"/>
               <path d="M245.456 290.74L154.618 158.612C145.81 145.767 138.102 135.674 131.496 128.333C124.889 120.626 116.265 113.836 105.621 107.964C94.9773 102.091 81.9481 98.7881 66.5332 98.0541V87.0435H132.597C148.746 87.0435 162.326 92.3653 173.336 103.009C184.347 113.285 196.459 128.15 209.671 147.602L278.488 249.45L366.573 378.825C377.95 395.708 390.062 409.838 402.908 421.216C416.12 432.226 430.618 438.282 446.4 439.383V450.394H388.594C372.812 450.394 358.865 444.889 346.753 433.878C334.642 422.5 322.897 407.819 311.519 389.835L245.456 290.74Z" fill="#AED6FF"/>
@@ -37,8 +47,10 @@ const Sidebar = () => {
             </svg>
             </a>
           </div>
-          
-          <ul className="space-y-1 flex flex-col tracking-wide mt-16 pr-4">
+        </div>
+
+        <div>
+          <ul className="space-y-1 flex flex-col tracking-wide mb-16 pr-4">
             {
               Sidebardata.map((item, index) => (
                   <li key={index} className=''>
@@ -53,15 +65,24 @@ const Sidebar = () => {
           </ul>
         </div>
         <div className=" pt-4 border-t border-slate-900 pr-4">
-          <button className=" text-slate-200 flex items-center gap-3 hover:bg-blue-900 rounded-md w-full text-base p-3 pl-5 menu">
+          <button 
+          onClick={handleLogout}
+          className=" text-slate-200 flex items-center gap-3 hover:bg-blue-900 rounded-md w-full text-base p-3 pl-5 menu">
             <IoMdLogOut fontSize={24}/>
             <span className="">Logout</span>
           </button>
         </div>
       </aside>
-      <div>
-        <Navbar />
-      </div>
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover/>
     </>
   )
 }

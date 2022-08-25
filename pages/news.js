@@ -1,26 +1,19 @@
 import React, { useState } from 'react'
 import Sidebar from '../components/user-components/Sidebar'
-import { Filter } from '../components/user-components/Filter'
-import { VscFilter } from 'react-icons/vsc'
 import { useAuth } from '../context/TraderxContext'
-import Card from '../components/user-components/recycle/Card'
 import { Navbar } from '../components/user-components/Navbar'
 import { BsSearch } from 'react-icons/bs'
 import HashLoader from "react-spinners/HashLoader"
+import { Newscard } from '../components/user-components/recycle/Newscard'
 
-export default function Discover() {
+export default function News() {
 
   const [ loading, setLoading ] = useState(true)
-  const [isOpen, setIsOpen] = useState(false)
   const [ searchTerm, setSearchterm ] = useState("")
 
-  const handleFilter = () => {
-    setIsOpen(!isOpen)
-  }
+  const { News } = useAuth()
 
-  const { Idea } = useAuth()
-
-  console.log(Idea)
+  console.log(News)
 
   setTimeout(() => {
     setLoading(false)
@@ -37,9 +30,9 @@ export default function Discover() {
         <div>
           <Sidebar />
           <Navbar />
-          <div className='lg:w-[87%] float-right min-h-screen bg-night'>
-            <div className='grid grid-cols-5 mt-20 gap-6'>
-              <div className='col-span-4 ml-20 grid items-center'>
+          <div className='lg:w-[87%] float-right min-h-screen bg-night justify-center'>
+            <div className='mt-20 gap-6'>
+              <div className=' mx-20 grid items-center'>
                 <label htmlFor="table-search" className="sr-only">
                   Search
                 </label>
@@ -54,21 +47,14 @@ export default function Discover() {
                   onChange={(e) => setSearchterm(e.target.value)}
                 />
               </div>
-              <div className='col-span-1 grid w-32'>
-                <button className='bg-gray-600 text-light-blue row-flex px-4 py-1 justify-center rounded' onClick={handleFilter}>Filter &nbsp; <VscFilter /></button>
-              </div>
             </div>
 
-            <Filter isOpen={isOpen}/>
-
-            <div>Ideas</div>
-
-            <div className='grid grid-cols-3 gap-5 px-20 pb-8'>
-              {Idea?.filter((item) => {
+            <div className='grid grid-cols-3 gap-5 px-20 pb-8 mt-6'>
+              {News?.filter((item) => {
                 if( searchTerm == "") return item
-                else if( item?.data?.shareName?.toLowerCase().includes(searchTerm.toLowerCase()) ) return item
-                }).map(idea => (
-                <Card className="text-white" idea={idea} key={idea.id} />
+                else if( item?.data?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ) return item
+                }).map(news => (
+                <Newscard className="text-white" news={news} key={news.id}/>
               ))}
             </div>
           </div>
